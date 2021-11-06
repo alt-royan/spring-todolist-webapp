@@ -2,6 +2,7 @@ package todolist.springtodolist.api.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -12,6 +13,10 @@ public class User {
     private String login;
     @Column(nullable = false)
     private String password;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Task> tasklist;
 
     public User(){
 
