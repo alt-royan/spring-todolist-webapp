@@ -1,9 +1,13 @@
 package todolist.springtodolist.api.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import todolist.springtodolist.api.entity.User;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+import java.util.Optional;
 
-    User findByLogin(String username);
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+
+    Optional<User> findByLogin(String username);
 }

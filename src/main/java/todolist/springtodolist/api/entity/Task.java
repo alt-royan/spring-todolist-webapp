@@ -1,7 +1,8 @@
+/*
 package todolist.springtodolist.api.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import todolist.springtodolist.api.model.TaskModel;
+import todolist.springtodolist.api.dto.TaskModel;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -95,3 +96,4 @@ public class Task{
         return id;
     }
 }
+*/

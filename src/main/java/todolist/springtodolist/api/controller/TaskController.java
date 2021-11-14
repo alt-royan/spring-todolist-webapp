@@ -1,3 +1,4 @@
+/*
 package todolist.springtodolist.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -5,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import todolist.springtodolist.api.entity.Task;
 import todolist.springtodolist.api.exception.TaskNotFoundException;
 import todolist.springtodolist.api.exception.UserNotFoundException;
-import todolist.springtodolist.api.model.TaskModel;
+import todolist.springtodolist.api.dto.TaskModel;
 import todolist.springtodolist.api.service.TaskService;
 
 import java.util.stream.Stream;
@@ -22,7 +23,7 @@ public class TaskController {
         return taskService.getAll(userId);
     }
 
-    @GetMapping("/users/*/tasks/{taskId}")
+    @GetMapping("/users/tasks/{taskId}")
     public TaskModel allTasks(@PathVariable("taskId") String taskId) throws TaskNotFoundException {
         return taskService.getTask(taskId);
     }
@@ -32,8 +33,9 @@ public class TaskController {
         return taskService.saveTask(task, userId);
     }
 
-    @DeleteMapping("/users/*/tasks/{taskId}")
+    @DeleteMapping("/users/tasks/{taskId}")
     public String deleteTask(@PathVariable("taskId") String taskId) throws TaskNotFoundException {
         return taskService.deleteTask(taskId);
     }
 }
+*/

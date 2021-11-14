@@ -1,48 +1,27 @@
 package todolist.springtodolist.api.entity;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Data
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
     @Column(unique = true, nullable = false)
     private String login;
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Task> tasklist;
-
-    public User(){
-
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 }

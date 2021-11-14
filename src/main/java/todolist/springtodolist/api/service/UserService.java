@@ -2,16 +2,17 @@ package todolist.springtodolist.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import todolist.springtodolist.api.entity.Role;
+import todolist.springtodolist.api.entity.Status;
 import todolist.springtodolist.api.entity.User;
-import todolist.springtodolist.api.exception.TaskNotFoundException;
 import todolist.springtodolist.api.exception.UserAlreadyExistException;
 import todolist.springtodolist.api.exception.UserNotFoundException;
-import todolist.springtodolist.api.model.UserModel;
+import todolist.springtodolist.api.exception.WrongPasswordException;
 import todolist.springtodolist.api.repository.UserRepository;
 
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import javax.transaction.Transactional;
 
 
 @Service
@@ -20,31 +21,57 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    //Register new user
-    public UserModel saveUser(User user) throws UserAlreadyExistException {
-        if (userRepository.findByLogin(user.getLogin())!=null){
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    //Save new user with unique login
+    public User saveNewDefaultUser(User user) throws UserAlreadyExistException {
+        if (userRepository.findByLogin(user.getLogin()).isPresent()){
             throw new UserAlreadyExistException(user.getLogin());
         }
-        return UserModel.modelOf(userRepository.save(user));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER);
+        user.setStatus(Status.ACTIVE);
+        return userRepository.save(user);
+    }
+
+    //Find user by login
+    public User findByLogin(String login) throws UserNotFoundException {
+        return userRepository.findByLogin(login).orElseThrow(()->new UserNotFoundException(login));
     }
 
     //Get list of all users
-    public Stream<UserModel> getAll(){
-        return StreamSupport.stream(userRepository.findAll().spliterator(), false).map(UserModel::modelOf);
+    public Iterable<User> getAll(){
+        return userRepository.findAll();
     }
 
     //Get one user by id
-    public UserModel getUserById(Integer id) throws UserNotFoundException {
-        return userRepository.findById(id).map(UserModel::modelOf).orElseThrow(()->new UserNotFoundException(id));
+    public User getUserById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }
 
     //Delete user by id
-    public Integer deleteUser(Integer id) throws UserNotFoundException {
+    public Long deleteUser(Long id) throws UserNotFoundException {
         try {
             userRepository.deleteById(id);
             return id;
         }catch(EmptyResultDataAccessException ex){
             throw new UserNotFoundException(id);
+        }
+    }
+
+
+    //Find user by login and check password
+    public User findByLoginAndPassword(String login, String password) throws UserNotFoundException, WrongPasswordException {
+        User user = findByLogin(login);
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }else{
+                throw new WrongPasswordException();
+            }
+        }else{
+            throw new UserNotFoundException(login);
         }
     }
 

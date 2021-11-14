@@ -1,13 +1,12 @@
+/*
 package todolist.springtodolist.api.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import todolist.springtodolist.api.entity.Task;
 import todolist.springtodolist.api.entity.User;
 import todolist.springtodolist.api.exception.TaskNotFoundException;
 import todolist.springtodolist.api.exception.UserNotFoundException;
-import todolist.springtodolist.api.model.TaskModel;
 import todolist.springtodolist.api.repository.TaskRepository;
 import todolist.springtodolist.api.repository.UserRepository;
 
@@ -57,3 +56,4 @@ public class TaskService {
     }
 
 }
+*/

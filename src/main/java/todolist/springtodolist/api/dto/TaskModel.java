@@ -1,4 +1,5 @@
-package todolist.springtodolist.api.model;
+/*
+package todolist.springtodolist.api.dto;
 
 import todolist.springtodolist.api.entity.Task;
 
@@ -82,3 +83,4 @@ public class TaskModel{
         this.user_id = user_id;
     }
 }
+*/
