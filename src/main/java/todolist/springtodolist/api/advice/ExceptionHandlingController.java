@@ -5,13 +5,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import todolist.springtodolist.api.exception.JwtAuthenticationException;
-import todolist.springtodolist.api.exception.UserAlreadyExistException;
-import todolist.springtodolist.api.exception.UserNotFoundException;
-import todolist.springtodolist.api.exception.WrongPasswordException;
+import todolist.springtodolist.api.exception.*;
 
 @ControllerAdvice
 public class ExceptionHandlingController {
+
     @ResponseBody
     @ExceptionHandler(UserAlreadyExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -23,6 +21,13 @@ public class ExceptionHandlingController {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String UserNotFoundError(UserNotFoundException ex){
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(TaskNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String TaskNotFoundError(TaskNotFoundException ex){
         return ex.getMessage();
     }
 

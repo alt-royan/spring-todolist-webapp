@@ -19,6 +19,7 @@ import todolist.springtodolist.api.service.UserService;
 
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Base64;
@@ -32,6 +33,8 @@ public class JwtProvider {
     //Secret word to sign jwt
     @Value("${jwt.secret}")
     private String jwtSecret;
+    public static final String AUTHORIZATION = "Authorization";
+
 
     @Autowired
     private UserService userService;
@@ -67,18 +70,9 @@ public class JwtProvider {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException expEx) {
-            logger.warn("Token expired");
-        } catch (UnsupportedJwtException unsEx) {
-            logger.warn("Unsupported jwt");
-        } catch (MalformedJwtException mjEx) {
-            logger.warn("Malformed jwt");
-        } catch (SignatureException sEx) {
-            logger.warn("Invalid signature");
-        } catch (Exception e) {
-            logger.warn("Invalid token");
+        } catch (JwtException | IllegalArgumentException e){
+            throw new JwtAuthenticationException("JWT token is expired or invalid", HttpStatus.UNAUTHORIZED);
         }
-        throw new JwtAuthenticationException("JWT token is expired or invalid", HttpStatus.UNAUTHORIZED);
     }
 
 
@@ -107,5 +101,13 @@ public class JwtProvider {
 
         UserDetails userDetails= userDetailsService.loadUserByUsername(getLoginFromToken(token));
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    public String getTokenFromRequest(HttpServletRequest request) {
+        String bearer = request.getHeader(AUTHORIZATION);
+        if (bearer!=null && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
     }
 }

@@ -2,8 +2,10 @@ package todolist.springtodolist.api.entity;
 
 
 import lombok.Data;
+import org.apache.catalina.LifecycleState;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,4 +26,8 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Task> tasks;
 }

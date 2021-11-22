@@ -42,8 +42,8 @@ public class AuthController {
     @PostMapping("/auth")
     public AuthResponseDTO auth(@RequestBody @Valid AuthRequestDTO request) throws UserNotFoundException, WrongPasswordException {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        String token = jwtProvider.generateToken(user);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
+        String token = jwtProvider.generateToken(user);
         return new AuthResponseDTO(token, jwtProvider);
     }
 
