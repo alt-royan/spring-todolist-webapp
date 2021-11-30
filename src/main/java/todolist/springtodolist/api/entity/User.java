@@ -1,8 +1,10 @@
 package todolist.springtodolist.api.entity;
 
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Data;
 import org.apache.catalina.LifecycleState;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.*;
 import java.util.List;

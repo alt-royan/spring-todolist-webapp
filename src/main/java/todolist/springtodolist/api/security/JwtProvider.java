@@ -52,7 +52,7 @@ public class JwtProvider {
 
     //Generate new jwt token
     public String generateToken(User user){
-        Date date = Date.from(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date date = Date.from(LocalDate.now().plusDays(2).atStartOfDay(ZoneId.systemDefault()).toInstant());
         Claims claims =Jwts.claims();
         claims.put("user_id", user.getId());
         return Jwts.builder().
