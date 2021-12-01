@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import todolist.springtodolist.api.entity.Status;
 import todolist.springtodolist.api.entity.User;
 import todolist.springtodolist.api.exception.JwtAuthenticationException;
 import todolist.springtodolist.api.service.UserService;
@@ -69,11 +70,14 @@ public class JwtProvider {
     public boolean validateToken(String token) throws JwtAuthenticationException{
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            return true;
+            Long userId =getUserIdFromToken(token);
+            return userService.getUserById(userId).getStatus() != Status.DELETE;
         } catch (JwtException | IllegalArgumentException e){
             throw new JwtAuthenticationException("JWT token is expired or invalid", HttpStatus.UNAUTHORIZED);
         }
     }
+
+
 
 
     //Get user_id from token
