@@ -14,7 +14,7 @@
 	<name>springToDoList</name>
 	<description>ToDo list api project with web or telegram implementation </description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 
@@ -102,10 +102,21 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals><goal>copy-dependencies</goal></goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
 	</build>
 
