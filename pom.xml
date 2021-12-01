@@ -15,7 +15,6 @@
 	<description>ToDo list api project with web or telegram implementation </description>
 	<properties>
 		<java.version>16</java.version>
-		<maven.compiler.release>16</maven.compiler.release>
 	</properties>
 	<dependencies>
 
