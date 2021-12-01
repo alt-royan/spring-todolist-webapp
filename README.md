@@ -1,4 +1,4 @@
-#REST Api todo list
+# REST Api todo list
 
 Api для todo list с авторизацией. Api реализовано на _Java + Spring Boot_, поддерживает стандартные CRUD операции. 
 
