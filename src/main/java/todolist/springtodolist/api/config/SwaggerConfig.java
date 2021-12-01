@@ -15,6 +15,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import todolist.springtodolist.api.entity.Task;
 import todolist.springtodolist.api.entity.User;
 
+import java.util.ArrayList;
+
 
 @Configuration
 @EnableSwagger2
@@ -23,7 +25,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(ApiInfo.DEFAULT)
+                .apiInfo(info())
                 //.securityContexts(List.of(securityContext()))
                 //.securitySchemes(List.of(apiKey()))
                 .select()
@@ -31,6 +33,15 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .paths(PathSelectors.any())
                 .build()
                 .ignoredParameterTypes(User.class, Task.class);
+    }
+
+    private ApiInfo info(){
+        return new ApiInfo(
+                "Todo List REST Api Documentation",
+                "Тестовый проект по созданию api для работы с todolist. Api написано на spring-boot.",
+                "v1.0",
+                "urn:tos", new Contact("", "", ""),
+                "Apache 2.0", "www.apache.org/licenses/LICENSE-2.0", new ArrayList());
     }
 
     /*private ApiKey apiKey() {

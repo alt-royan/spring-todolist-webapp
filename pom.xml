@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>todolist</groupId>
 	<artifactId>springToDoList</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>springToDoList</name>
 	<description>ToDo list api project with web or telegram implementation </description>
 	<properties>
