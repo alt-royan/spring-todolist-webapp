@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import todolist.springtodolist.api.dto.StringResponseDTO;
 import todolist.springtodolist.api.dto.TaskDTO;
@@ -47,7 +48,7 @@ public class AdminController {
 
     //Get any task by id
     @ApiOperation(value = "Get user's task", notes = "Get all user's task by his id.")
-    @GetMapping("/{user_id}/tasks")
+    @GetMapping("users/{user_id}/tasks")
     public ResponseEntity<List<TaskDTO>> getUsersTask(@RequestHeader("Authorization") String bearer,
                                                @PathVariable("user_id") @ApiParam(name = "User id") Long user_id) {
         return ResponseEntity.ok(TaskDTO.ofList(taskService.getAll(user_id)));

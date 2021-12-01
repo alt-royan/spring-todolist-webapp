@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+import todolist.springtodolist.api.entity.Status;
 import todolist.springtodolist.api.exception.JwtAuthenticationException;
 import todolist.springtodolist.api.exception.UserNotFoundException;
 
@@ -38,4 +39,5 @@ public class JwtFilter extends GenericFilterBean {
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 }
